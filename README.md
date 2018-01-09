@@ -1,0 +1,2 @@
+# IPCBinderPool
+利用binderPool连接池和AIDL实现IPC
