@@ -1,6 +1,4 @@
 package com.qmz.binderconnectpool;
-
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -28,12 +26,12 @@ public class BinderPoolUtils {
             binderPool=IBinderPool.Stub.asInterface(service);
             System.out.println("Thread.currentThread()onServiceConnected======="+Thread.currentThread().getId());
 
-//            try {
-//                binderPool.asBinder().linkToDeath(mbinderDeath,0);
-//            } catch (RemoteException e) {
-//                e.printStackTrace();
-//            }
-           // mcountDownlatch.countDown();
+            try {
+                binderPool.asBinder().linkToDeath(mbinderDeath,0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            mcountDownlatch.countDown();
         }
 
         @Override
@@ -42,14 +40,14 @@ public class BinderPoolUtils {
         }
     };
 
-//    private IBinder.DeathRecipient mbinderDeath=new IBinder.DeathRecipient() {
-//        @Override
-//        public void binderDied() {
-//            binderPool.asBinder().unlinkToDeath(mbinderDeath,0);
-//            binderPool=null;
-//            connectServices();
-//        }
-//    };
+    private IBinder.DeathRecipient mbinderDeath=new IBinder.DeathRecipient() {
+        @Override
+        public void binderDied() {
+            binderPool.asBinder().unlinkToDeath(mbinderDeath,0);
+            binderPool=null;
+            connectServices();
+        }
+    };
 
     public BinderPoolUtils(Context context) {
         mcontext= context.getApplicationContext();
