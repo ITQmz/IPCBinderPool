@@ -60,11 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     System.out.println("================start");
                     BinderPoolUtils.getInstance(MainActivity.this);
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
                     IBinder serviceAdd=BinderPoolUtils.getInstance(MainActivity.this).queryBinder(0);
                     iAddBook=IAddBook.Stub.asInterface(serviceAdd);
                     Book book=new Book(1,"第一本书");

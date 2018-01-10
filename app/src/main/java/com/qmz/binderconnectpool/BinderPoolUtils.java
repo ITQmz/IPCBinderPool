@@ -79,18 +79,18 @@ public class BinderPoolUtils {
     }
 
     private synchronized void connectServices() {
-        //mcountDownlatch=new CountDownLatch(1);
+        mcountDownlatch=new CountDownLatch(1);
         Intent intent=new Intent();
         intent.setAction("com.qmz.myservice");
         intent.setPackage("com.qmz.binderconnectpool");
         mcontext.bindService(intent,serviceConnection,BIND_AUTO_CREATE);
 
         System.out.println("Thread.currentThread()connectServices======="+Thread.currentThread().getId());
-//        try {
-//            mcountDownlatch.await();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            mcountDownlatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
